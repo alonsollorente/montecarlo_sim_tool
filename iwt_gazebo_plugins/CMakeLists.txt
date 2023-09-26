@@ -81,25 +81,6 @@ if (UNIX)
   target_compile_definitions(gazebo_ros_velodyne_gpu_laser  PRIVATE GAZEBO_GPU_RAY=1)
   # End VLP-16
 
-  # # VLP-32
-  # # No GPU
-  # add_library(gazebo_ros_velodyne32_laser src/GazeboRosVelodyne32Laser.cpp)
-  # target_link_libraries(gazebo_ros_velodyne32_laser
-  #   ${catkin_LIBRARIES}
-  #   ${GAZEBO_LIBRARIES}
-  #   RayPlugin
-  # )
-
-  # # GPU
-  # add_library(gazebo_ros_velodyne32_gpu_laser src/GazeboRosVelodyne32Laser.cpp)
-  # target_link_libraries(gazebo_ros_velodyne32_gpu_laser
-  #   ${catkin_LIBRARIES}
-  #   ${GAZEBO_LIBRARIES}
-  #   GpuRayPlugin
-  # )
-  # target_compile_definitions(gazebo_ros_velodyne32_gpu_laser  PRIVATE GAZEBO_GPU_RAY=1)
-  # # End VLP-32
-
   install(TARGETS gazebo_ros_ouster_laser gazebo_ros_ouster_gpu_laser gazebo_ros_velodyne_laser gazebo_ros_velodyne_gpu_laser
           LIBRARY DESTINATION ${CATKIN_PACKAGE_LIB_DESTINATION}
   )
