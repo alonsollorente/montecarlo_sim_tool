@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="dlr_vessel">
+
+    <!-- Model parameters -->
+    <xacro:arg name="model_name" default="model_name"/>
+
+    <!-- Box inertial macro -->
+    <xacro:macro name="box_inertial" params="x y z mass *origin">
+        <inertial>
+        <mass value="${mass}" />
+        <xacro:insert_block name="origin" />
+        <inertia ixx="${0.0833333 * mass * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+            iyy="${0.0833333 * mass * (x*x + z*z)}" iyz="0.0"
+            izz="${0.0833333 * mass * (x*x + y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- URDF object macro -->
+    <xacro:macro name="dlr_vessel" params="model_prefix">
+
+        <material name="White">
+            <color rgba="0.6 0.6 0.6 1.0"/>
+        </material>
+
+        <link name="${model_prefix}base_footprint"/>
+        <link name="${model_prefix}base_link">
+            <xacro:box_inertial x="10" y="3" z="3" mass="50">
+                <origin xyz="0 0 0" rpy="0 0 0" />
+            </xacro:box_inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://iwt_vessel_description/meshes/patrol_boat.stl"/>
+                </geometry>
+                <material name="White"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://iwt_vessel_description/meshes/patrol_boat.stl"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${model_prefix}base_link_joint" type="fixed">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <parent link="${model_prefix}base_footprint"/>
+            <child link="${model_prefix}base_link"/>
+        </joint>
+
+        <!-- Gazebo properties -->
+        <gazebo reference="${model_prefix}base_link">
+            <material>Gazebo/Grey</material>
+            <!-- I changed the mus -->
+            <mu1>0.2</mu1> 
+            <mu2>0.2</mu2>
+            <minDepth>0.001</minDepth>
+            <maxVel>0</maxVel>
+            <static>true</static>  
+            <gravity>0</gravity>  
+
+        </gazebo>
+        
+        <!-- Planar move plugin -->
+        <gazebo>
+            <plugin name="${model_prefix}planar_move_controller" filename="libiwt_gazebo_planar_move.so">
+                <commandTopic>cmd_vel</commandTopic>
+                <odometryTopic>odom</odometryTopic>
+                <odometryFrame>odom</odometryFrame>
+                <odometryRate>20.0</odometryRate>
+                <robotBaseFrame>${model_prefix}base_footprint</robotBaseFrame>
+                <cmdTimeout>-1</cmdTimeout>
+            </plugin>
+
+        </gazebo>
+
+    </xacro:macro>
+
+</robot>
+

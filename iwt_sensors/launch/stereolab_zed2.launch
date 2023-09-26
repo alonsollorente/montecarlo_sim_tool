@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="camera_brand" default="stereolabs"/> 
+    <arg name="camera_model" default="zed2"/>
+    <arg name="camera_number" default="0" /> 
+
+    <arg name="x_init_pose" default="0" />
+    <arg name="y_init_pose" default="0" />
+    <arg name="z_init_pose" default="0" />
+    <arg name="roll_init_pose" default="0" />
+    <arg name="pitch_init_pose" default="0" />
+    <arg name="yaw_init_pose" default="0" />
+
+    <arg name="world_frame" default="world"/>
+
+    <arg name="align_depth" default="true" />
+    <arg name="enable_camera_gazebo_plugin" default="true"/>
+
+    <arg name="xyz" value="'$(arg x_init_pose) $(arg y_init_pose) $(arg z_init_pose)'"/>
+    <arg name="rpy" value="'$(arg roll_init_pose) $(arg pitch_init_pose) $(arg yaw_init_pose)'"/>
+
+    <!-- Spawn the camera -->
+    <include file="$(find dlr_gazebo_world)/launch/spawn_urdf.launch">
+        <arg name="model_name" value="camera$(arg camera_number)"/>
+        <arg name="urdf_filepath" value="$(find dlr_sensors)/urdf/$(arg camera_brand)_$(arg camera_model)_standalone.xacro"/>
+        <arg name="urdf_args" value="camera_name:=$(arg camera_brand)_$(arg camera_model)_camera$(arg camera_number) 
+                                     align_depth:=$(arg align_depth)
+                                     world_frame:=$(arg world_frame) xyz:=$(arg xyz) rpy:=$(arg rpy)
+                                     enable_gazebo_plugin:=$(arg enable_camera_gazebo_plugin)"/>
+        <arg name="spawn_robot_state_publisher" value="true"/>
+    </include>
+
+
+</launch>

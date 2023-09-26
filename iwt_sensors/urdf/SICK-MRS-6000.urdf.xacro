@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="MRS6000">
+  <xacro:property name="M_PI" value="3.1415926535897931" />
+  <xacro:macro name="MRS6000" params="*origin parent:=base_link name:=sickscan length:=0.06 width:=0.06 height:=0.079 mass:=0.150">
+
+    <joint name="${name}_joint" type="fixed">
+      <xacro:insert_block name="origin" /> 
+      <parent link="${parent}" />
+      <child link="${name}" />
+    </joint>
+
+    <link name="${name}">
+      <visual>
+        <geometry>
+          <mesh filename="package://iwt_sensors/meshes/MRS6000/sick_tim_5xx.stl" />
+        </geometry>
+        <material name="blue" >
+          <color rgba="0 0 1 1" />
+        </material>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="package://iwt_sensors/meshes/MRS6000/sick_tim_5xx.stl" />
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="${mass}" />
+        <origin xyz="0 0 -0.026" />
+        <inertia ixx="${0.0833333 * mass * (width * width + height * height)}" ixy="0.0" ixz="0.0"
+          iyy="${0.0833333 * mass * (length * length + height * height)}" iyz="0.0"
+          izz="${0.0833333 * mass * (length * length + width * width)}" />
+      </inertial>
+    </link>
+
+
+  </xacro:macro>
+</robot>

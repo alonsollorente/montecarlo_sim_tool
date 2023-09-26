@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<package format="2">
+
+  <name>iwt_sensors</name>
+  <version>0.0.1</version>
+  <description>This is iwt_sensors package. It contains different simulated sensors (i.e. IMUs and LIDARs)</description>
+
+  <author email="alonsollorente1086@gmail.com">Alonso Llorente</author>
+
+  <maintainer email="alonsollorente1086@gmail.com">Alonso Llorente</maintainer>
+
+  <license>Apache 2.0</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <depend>roscpp</depend>
+  <depend>rospy</depend>
+  <depend>roslaunch</depend>
+
+  <exec_depend>velodyne_description</exec_depend>
+  <exec_depend>velodyne_gazebo_plugins</exec_depend>
+
+</package>

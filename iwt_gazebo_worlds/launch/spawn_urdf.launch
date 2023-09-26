@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <!-- Launch arguments -->
+    <arg name="model_name" default="canal_bridge"/>
+    <arg name="x_init_pose" default="-10"/>
+    <arg name="y_init_pose" default="0"/>
+    <arg name="z_init_pose" default="0"/>
+    <arg name="roll_init_pose" default="0"/>
+    <arg name="pitch_init_pose" default="0"/>
+    <arg name="yaw_init_pose" default="0"/>
+    <arg name="urdf_filepath" default="$(find iwt_gazebo_worlds)/urdf/canal_bridge.urdf.xacro"/>
+    <arg name="urdf_args" default=""/>
+    <arg name="spawn_controllers" default="true"/>
+    <arg name="spawn_robot_state_publisher" default="true"/>
+
+    <!-- Set spawning position -->
+    <arg name="xyz" value="'$(arg x_init_pose) $(arg y_init_pose) $(arg z_init_pose)'"/>
+    <arg name="rpy" value="'$(arg roll_init_pose) $(arg pitch_init_pose) $(arg yaw_init_pose)'"/>
+
+    <!-- Load Robot description -->
+    <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg urdf_filepath) $(arg urdf_args)"/>
+
+    <!-- Robot state and joint state publishers -->
+    <node if="$(arg spawn_robot_state_publisher)" name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
+    <node if="$(arg spawn_controllers)" name="joint_state_controller_spawner" pkg="controller_manager" type="spawner" args="joint_state_controller"/>
+
+    <!-- Spawn model -->
+    <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model" 
+                args="-param robot_description -urdf -model $(arg model_name)
+                -x $(arg x_init_pose) 
+                -y $(arg y_init_pose) 
+                -z $(arg z_init_pose) 
+                -R $(arg roll_init_pose)
+                -P $(arg pitch_init_pose)
+                -Y $(arg yaw_init_pose)"/>
+
+</launch>

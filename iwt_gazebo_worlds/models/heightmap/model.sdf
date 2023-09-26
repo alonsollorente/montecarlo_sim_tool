@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="heightmap">
+    <static>true</static> <!-- Set to true if the object doesn't move -->
+    <pose>0 0 0 0 0 0</pose>
+
+    <link name="link">
+      <visual name="visual">
+        <geometry>
+          <mesh>
+            <uri>model://heightmap/meshes/rural_river.stl</uri>
+            <scale>5 5 5</scale>
+          </mesh>
+        </geometry>
+      </visual>
+      
+      <!-- Define the collision properties -->
+      <collision name="collision">
+        <geometry>
+          <mesh>
+            <uri>model://heightmap/meshes/rural_river.stl</uri>
+            <scale>5 5 5</scale>
+          </mesh>
+        </geometry>
+      </collision>
+    </link>
+  </model>
+</sdf>

@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <!-- Launch arguments -->
+    <arg name="urdf_filepath" value="$(find iwt_vessel_description)/robots/dlr_vessel.xacro"/>
+    <arg name="urdf_args" default=""/>
+
+    <!-- RViz arguments -->
+    <arg name="launch_rviz" default="true"/>
+    <arg name="rviz_config_file" default="$(find iwt_sensors)/rviz/sensors.rviz"/>
+
+    <!-- Load Robot description -->
+    <param name="robot_description" command="$(find xacro)/xacro $(arg urdf_filepath) $(arg urdf_args)"/>
+
+    <!-- Robot state and joint state publishers -->
+    <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher" output="screen"/>
+
+    <!-- Launch RViz -->
+    <node if="$(arg launch_rviz)" name="rviz" pkg="rviz" type="rviz" args="-d $(arg rviz_config_file)" output="screen"/>
+
+
+
+</launch>

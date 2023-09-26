@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="gnss_antenna">
+
+  <xacro:macro name="gnss_antenna" params="*origin parent model_prefix:=gnss_ name:=gnss_antenna">
+
+
+    <link name="gnss_antenna">
+      <visual>
+        <geometry>
+          <!-- Hexagon shape -->
+          <box size="0.5 0.7 0.1"/> <!-- Box representing hexagon -->
+        </geometry>
+      </visual>
+      <collision>
+        <geometry>
+          <!-- Hexagon shape for collision -->
+          <box size="0.5 0.7 0.1"/> <!-- Box representing hexagon -->
+        </geometry>
+      </collision>
+      <inertial>
+        <mass value="1.0"/>
+        <inertia ixx="0.1" ixy="0.0" ixz="0.0" iyy="0.1" iyz="0.0" izz="0.1"/>
+      </inertial>
+    </link>
+
+
+    <!-- Create the joint -->
+    <joint name="top_cylinder_joint" type="fixed">
+      <parent link="${parent}"/>
+      <child link="gnss_antenna"/>
+      <xacro:insert_block name="origin" />
+    </joint>
+
+    <!-- Gazebo requires the ouster_gazebo_plugins package -->
+    <gazebo>
+        <plugin name="gazebo_ros_gps" filename="libhector_gazebo_ros_gps_bis.so">
+          <updateRate>2.0</updateRate>
+          <bodyName>gnss_antenna</bodyName>
+          <frameId>gnss_antenna</frameId>
+          <topicName>/gps/fix</topicName>
+          <velocityTopicName>/gps/fix_velocity</velocityTopicName>
+          <referenceLatitude>-31.813745</referenceLatitude>
+          <referenceLongitude>-52.043246</referenceLongitude>
+          <referenceHeading>90</referenceHeading>
+          <referenceAltitude>10</referenceAltitude>
+          <offset>0 0 0</offset>
+          <drift>0.001 0.001 0.001</drift>
+          <gaussianNoise>0.05 0.05 0.05</gaussianNoise>
+          <velocityDrift>0.001 0.001 0.001</velocityDrift>
+          <velocityGaussianNoise>0.5 0.5 0.5</velocityGaussianNoise>
+        </plugin>
+    </gazebo>
+
+  </xacro:macro>
+
+  <!-- <xacro:gnss_antenna model_prefix="gnss_"/> -->
+</robot>

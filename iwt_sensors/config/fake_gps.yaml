@@ -1,0 +1,6 @@
+fake_gps:
+
+  position:
+    covariance: 0.01
+
+  frame_id: "dlr_vessel_gps_base_link"

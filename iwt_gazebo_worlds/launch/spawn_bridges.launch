@@ -1,0 +1,59 @@
+<?xml version="1.0" ?>
+<launch>
+
+    <group ns="bridge1">
+            <include file="$(find iwt_gazebo_worlds)/launch/spawn_urdf.launch">
+                <arg name="model_name" value="canal_bridge1"/>
+                <arg name="x_init_pose" value="20"/>
+                <arg name="y_init_pose" value="-3"/>
+                <arg name="z_init_pose" value="0"/>
+                <arg name="yaw_init_pose" value="1.5407"/>
+                <arg name="urdf_filepath" value="$(find iwt_gazebo_worlds)/urdf/canal_bridge.urdf.xacro"/>
+                <arg name="urdf_args" value=""/>
+                <arg name="spawn_controllers" value="false"/>
+                <arg name="spawn_robot_state_publisher" value="false"/>
+            </include>
+        </group>
+
+        <group ns="bridge2">
+            <include file="$(find iwt_gazebo_worlds)/launch/spawn_urdf.launch">
+                <arg name="model_name" value="canal_bridge2"/>
+                <arg name="x_init_pose" value="-30"/>
+                <arg name="y_init_pose" value="-3"/>
+                <arg name="z_init_pose" value="0"/>
+                <arg name="yaw_init_pose" value="1.5407"/>
+                <arg name="urdf_filepath" value="$(find iwt_gazebo_worlds)/urdf/canal_bridge.urdf.xacro"/>
+                <arg name="urdf_args" value=""/>
+                <arg name="spawn_controllers" value="false"/>
+                <arg name="spawn_robot_state_publisher" value="false"/>
+            </include>
+        </group>
+
+        <group ns="bridge3">
+            <include file="$(find iwt_gazebo_worlds)/launch/spawn_urdf.launch">
+                <arg name="model_name" value="canal_bridge3"/>
+                <arg name="x_init_pose" value="61"/>
+                <arg name="y_init_pose" value="80"/>
+                <arg name="z_init_pose" value="0"/>
+                <arg name="yaw_init_pose" value="0"/>
+                <arg name="urdf_filepath" value="$(find iwt_gazebo_worlds)/urdf/canal_bridge.urdf.xacro"/>
+                <arg name="urdf_args" value=""/>
+                <arg name="spawn_controllers" value="false"/>
+                <arg name="spawn_robot_state_publisher" value="false"/>
+            </include>
+        </group>
+
+        <group ns="bridge4">
+            <include file="$(find iwt_gazebo_worlds)/launch/spawn_urdf.launch">
+                <arg name="model_name" value="canal_bridge4"/>
+                <arg name="x_init_pose" value="54"/>
+                <arg name="y_init_pose" value="-50"/>
+                <arg name="z_init_pose" value="0"/>
+                <arg name="yaw_init_pose" value="0"/>
+                <arg name="urdf_filepath" value="$(find iwt_gazebo_worlds)/urdf/canal_bridge.urdf.xacro"/>
+                <arg name="urdf_args" value=""/>
+                <arg name="spawn_controllers" value="false"/>
+                <arg name="spawn_robot_state_publisher" value="false"/>
+            </include>
+        </group>
+    </launch>

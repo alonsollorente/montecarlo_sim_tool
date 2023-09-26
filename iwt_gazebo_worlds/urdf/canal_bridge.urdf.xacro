@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="canal_bridge">
+
+    <!-- Model parameters -->
+    <xacro:arg name="model_name" default="canal_bridge"/>
+
+    <!-- Box inertial macro -->
+    <xacro:macro name="box_inertial" params="x y z mass *origin">
+        <inertial>
+        <mass value="${mass}" />
+        <xacro:insert_block name="origin" />
+        <inertia ixx="${0.0833333 * mass * (y*y + z*z)}" ixy="0.0" ixz="0.0"
+            iyy="${0.0833333 * mass * (x*x + z*z)}" iyz="0.0"
+            izz="${0.0833333 * mass * (x*x + y*y)}" />
+        </inertial>
+    </xacro:macro>
+
+    <!-- URDF object macro -->
+    <xacro:macro name="canal_bridge" params="model_prefix">
+
+        <material name="White">
+            <color rgba="0.6 0.6 0.6 1.0"/>
+        </material>
+
+        <link name="${model_prefix}base_footprint"/>
+        <link name="${model_prefix}base_link">
+            <xacro:box_inertial x="10" y="3" z="3" mass="1000">
+                <origin xyz="0 0 0" rpy="0 0 0" />
+            </xacro:box_inertial>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://iwt_gazebo_worlds/meshes/canal_bridge_2.stl" scale="250 250 250"/>
+                </geometry>
+                <material name="White"/>
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <mesh filename="package://iwt_gazebo_worlds/meshes/canal_bridge_2.stl" scale="250 250 250"/>
+                </geometry>
+            </collision>
+        </link>
+
+        <joint name="${model_prefix}base_link_joint" type="fixed">
+            <parent link="${model_prefix}base_footprint"/>
+            <child link="${model_prefix}base_link"/>
+        </joint>
+
+        <!-- Gazebo properties -->
+        <gazebo reference="${model_prefix}base_link">
+            <material>Gazebo/Grey</material>
+            <mu1>0.2</mu1>
+            <mu2>0.2</mu2>
+            <minDepth>0.001</minDepth>
+            <maxVel>0</maxVel>
+            <static>true</static>
+            <!-- I added the gravity parameter to permit the bridges to remain a fixed position-->
+            <gravity>0</gravity>  
+        </gazebo>
+        
+    </xacro:macro>
+
+    <!-- Create macro -->
+    <xacro:canal_bridge model_prefix="$(arg model_name)_"/>
+
+</robot>
